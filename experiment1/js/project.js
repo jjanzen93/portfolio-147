@@ -1,6 +1,6 @@
-// project.js - purpose and description here
-// Author: Your Name
-// Date:
+// project.js - the brat generator generates brat-esque titles or phrases.
+// Author: Jack Janzen
+// Date: 4/8/25
 
 // NOTE: This is how we might start a basic JavaaScript OOP project
 
