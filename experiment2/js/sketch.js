@@ -95,7 +95,7 @@ function draw() {
   // triangles
   let color = Math.floor(random() * myInstance.availableColors.length)
   stroke(myInstance.availableColors[color]);
-  for (let i = 0; i < shps; i++) {
+  for (let i = 0; i < shapes; i++) {
     let x = width * random();
     let y = height * random();
     rotate(360*random());
@@ -109,7 +109,7 @@ function draw() {
     color = 0;
   }
   stroke(myInstance.availableColors[color]);
-  for (let i = 0; i < shps; i++) {
+  for (let i = 0; i < shapes; i++) {
     let x = width * random();
     let y = height * random();
     rotate(360*random());
@@ -123,7 +123,7 @@ function draw() {
     color = 0;
   }
   stroke(myInstance.availableColors[color]);
-  for (let i = 0; i < shps; i++) {
+  for (let i = 0; i < shapes; i++) {
     let x = width * random();
     let y = height * random();
     rotate(360*random());
@@ -137,7 +137,7 @@ function draw() {
     color = 0;
   }
   stroke(myInstance.availableColors[color]);
-  for (let i = 0; i < shps; i++) {
+  for (let i = 0; i < shapes; i++) {
     let x = width * random();
     let y = height * random();
     rotate(360*random());
