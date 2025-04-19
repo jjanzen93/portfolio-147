@@ -7,8 +7,8 @@
 
 // Constants - User-servicable parts
 // In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+const backgroundColor = "#060F17";
+const availableColors = ["#CF6A97", "#5AA4DE", "#D9AE86", "#C6CDD1"]
 
 // Globals
 let myInstance;
@@ -17,9 +17,9 @@ let seed = 0;
 var centerHorz, centerVert;
 
 class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
+    constructor(backgroundColor, availableColors) {
+        this.backgroundColor = backgroundColor;
+        this.availableColors = availableColors;
     }
 
     myMethod() {
@@ -44,7 +44,7 @@ function setup() {
   // resize canvas is the page is resized
 
   // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
+  myInstance = new MyClass("backgroundColor", "availableColors");
 
   $(window).resize(function() {
     resizeScreen();
@@ -85,7 +85,7 @@ function draw() {
   push(); // Save the current drawing context
   translate(centerHorz, centerVert); // Move the origin to the rectangle's center
   rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
+  fill(myInstance.backgroundColor);
   noStroke();
   rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
   pop(); // Restore the original drawing context
@@ -93,8 +93,8 @@ function draw() {
   const shapes = 1000*random()
 
   // triangles
-  let color = Math.floor(random() * availableColors.length)
-  stroke(availableColors[color]);
+  let color = Math.floor(random() * myInstance.availableColors.length)
+  stroke(myInstance.availableColors[color]);
   for (let i = 0; i < shps; i++) {
     let x = width * random();
     let y = height * random();
@@ -105,10 +105,10 @@ function draw() {
   
   // squares
   color++;
-  if (color == availableColors.length) {
+  if (color == myInstance.availableColors.length) {
     color = 0;
   }
-  stroke(availableColors[color]);
+  stroke(myInstance.availableColors[color]);
   for (let i = 0; i < shps; i++) {
     let x = width * random();
     let y = height * random();
@@ -119,10 +119,10 @@ function draw() {
   
   // stars
   color++;
-  if (color == availableColors.length) {
+  if (color == myInstance.availableColors.length) {
     color = 0;
   }
-  stroke(availableColors[color]);
+  stroke(myInstance.availableColors[color]);
   for (let i = 0; i < shps; i++) {
     let x = width * random();
     let y = height * random();
@@ -133,10 +133,10 @@ function draw() {
   
   // circles
   color++;
-  if (color == availableColors.length) {
+  if (color == myInstance.availableColors.length) {
     color = 0;
   }
-  stroke(availableColors[color]);
+  stroke(myInstance.availableColors[color]);
   for (let i = 0; i < shps; i++) {
     let x = width * random();
     let y = height * random();
