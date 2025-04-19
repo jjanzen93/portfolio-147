@@ -28,11 +28,12 @@ class MyClass {
 }
 
 function resizeScreen() {
-  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
-  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
-  console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
+  const width = canvasContainer.width();
+  const height = canvasContainer.height();
+
+  resizeCanvas(width, height);
+  centerHorz = width / 2;
+  centerVert = height / 2;
 }
 
 // setup() function is called once when the program starts
@@ -40,16 +41,26 @@ function setup() {
   // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+  let button = createButton("reimagine").mousePressed(() => seed++);
   canvas.parent("canvas-container");
+  button.parent("canvas-container");
   // resize canvas is the page is resized
 
   // create an instance of the class
-  myInstance = new MyClass("backgroundColor", "availableColors");
+  myInstance = new MyClass(backgroundColor, availableColors);
 
   $(window).resize(function() {
     resizeScreen();
   });
   resizeScreen();
+
+  $(document).ready(function () {
+    $("#fullscreen").on("click", function () {
+      $("body").toggleClass("is-fullscreen");
+      resizeScreen(); // Resize the canvas to fit the new fullscreen container
+    });
+  });
+
 }
 
 // star function taken from p5.js examples
@@ -80,21 +91,17 @@ function draw() {
   background(220);    
   // call a method on the instance
   myInstance.myMethod();
-
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
   fill(myInstance.backgroundColor);
+  rect(0, 0, width, height);
   noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
   randomSeed(seed);
   const shapes = 1000*random()
 
   // triangles
   let color = Math.floor(random() * myInstance.availableColors.length)
   stroke(myInstance.availableColors[color]);
+  print(myInstance.availableColors[color]);
+  noFill();
   for (let i = 0; i < shapes; i++) {
     let x = width * random();
     let y = height * random();
@@ -144,12 +151,6 @@ function draw() {
     let scale = getScale(x, y);
     circle(x, y, 25*scale);
   }
-
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
 
 }
 
