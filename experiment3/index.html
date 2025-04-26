@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 3 - World/Dungeon Generator</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -32,15 +32,31 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 3 - World/Dungeon Generator</h1>
 
 			<div class="minor-section">
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
-				</div>
+				<span id="canvasContainer1" style="margin: 0px;">
+					<div id="c1"></div>
+				</span>
+				<span id="canvasContainer2" style="margin: 0px;">
+					<div id="c2"></div>
+				</span>
+				<textarea cols="40" rows="20" id="asciiBox1" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
+				<textarea cols="40" rows="20" id="asciiBox2" style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;"></textarea>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
                 </div>
+				<body>
+					<button id="reseedButton1">
+					  reseed overworld
+					</button>
+					<button id="reseedButton2">
+					  reseed dungeon
+					</button>
+					<span id="seedReport"></span>
+					<hr />
+					
+				  </body>
 			</div>
 
 			<div class="minor-section">
