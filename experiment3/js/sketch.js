@@ -23,7 +23,7 @@ var s = function( p ) { // p could be any variable name
   
   p.preload = function() {
     tilesetImage = p.loadImage(
-      "../../img/25101045-29e2-407a-894c-e0243cd8c7c6_tilesetP8 (1).png"
+      "../img/25101045-29e2-407a-894c-e0243cd8c7c6_tilesetP8 (1).png"
     );
   };
 
