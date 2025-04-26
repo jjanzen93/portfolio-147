@@ -61,17 +61,17 @@
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>In this experiment, I sought to create a few different structures, like rivers, hallways, and paths. Additionally, I wanted to get a bettergrasp of autotiling to make realistic transitions between tile types.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>Random worlds are generated from a seed. Animations in the overworld are tracked as objects that are updated every few ticks, and deleted when the cycle ends. Hallways connect to available spots on placed rooms in the dungeon generator. The flashlight effect is a bunch of yellow circles with decreasing opacity mapped to the number of circles drawn. The winding rivers and paths randomly change the center tile location with every column/row drawn. Autotiling checks adjacent tiles to see if they are different from the target tile, exclusions can be passed into this check. a 4-bit code indicates different states, which dictate which transition tile to overlay at that position. Tileset from Kacper Woźniak’s "Micro Tileset - Overworld & Dungeon"</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I am really happy with how this experiment turned out. Autotiling and procedurally generated worlds exactly like these have eluded me for a long time, and I finally feel really confident in my grasp of the concepts here. I’ve never been so excited to implement something I’ve learned into a game. Once the idea of the offset working for selecting tiles relative to a chosen position on the tilemap clicked, autotiling seemed way less daunting than I initially believed. Plus, using a map to make a gradient was definitely an “Aha!” moment for me, which felt really good to figure out. I’m feeling a lot more stable in design elements now.</p>
 			</div>
 
 		</section>
