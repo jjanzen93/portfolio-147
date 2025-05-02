@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 4 - Infinite Worlds</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+	<script src="./xxhash.min.js" defer></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/project.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<script type="text/javascript" src="./js/xxhash.min.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 4 - Infinite Worlds</h1>
+
+			<div class="minor-section">
+				<span id="canvasContainer1" style="margin: 0px;">
+					<div id="c3"></div>
+				</span>
+				<span id="canvasContainer2" style="margin: 0px;">
+					<div id="c3"></div>
+				</span>
+				<span id="canvasContainer3" style="margin: 0px;">
+					<div id="c3"></div>
+				</span>
+
+                <div class="fullscreen-box">
+                    <button id="fullscreen">Fullscreen</button>
+                </div>
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>In this experiment, I sought to use seeded randomness to create three different infinite worlds that have variations in space and key, as well as signs of life. The first is an infinite version of Conway's Game of Life, which uses a set of rules to dictate the life and death of tiles at each step. Tiles can be created or destroyed by clicking. The second is a still world of water filled with rocks that can be levelled by creating a ripple via clicking. The third scrolls across a sky full of clouds which can be cut through with the mouse.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p>All three generators rely on xxhash to generate seeds based on a given key. The Game of Life makes it so 1 in 8 tiles will spawn as alive according to the hash. In the water world, 1 in 20 tiles will spawn as rock tiles naturally. The neighbors of rock tiles have a 25% chance of also being rocks, which can continue to spread from there. Usually, this generates rocks with an area of no more than 6 or 7 tiles, but it is technically possible to find bigger ones. The cloud world uses the seeded perlin noise, smooths it out significantly by a factor of 1/10, then depending on the size of the resulting value, change the opacity of that cloud tile. If the value is high enough, the cloud does not spawn. Additionally, I added a large number to the noise calculation in both the i and j values, so the mirroring effect that appears in Perlin noise on grids with both negative and positive values will not occur until 50,000 tiles in a certain direction. <br>In the first, alive tiles are tracked as an object literal, with each living tile represented as a key in the object. Every 20 ticks, the game advances, calculating which tiles should live and which should die. The value of that tile in the object is updated to true or false depending on the result of that calculation. Obviously, it would be impossible to have the game running everywhere all at once, so we only track the tiles that have been rendered already and advance their turns. Loading new areas creates new living tiles. So, while technically not a mathematically perfect game of life, it is as close as we can get with this.<br>The second world has to track both ripples and rocks, and it does so in two different ways. First, ripples are tracked as origins objects in a list. When a tile is clicked, an object that tracks the location and start time of the ripple is appended to the list of origins. Before tiles are drawn, the location of the ripple is updated if the age of the ripple has increased. I loop through the list of origins, checking for an increase in age. The age increases every 10 ticks, and once the age exceeds 10 the ripple is no longer drawn. The age of a ripple is used as the radius in creating a circle around the origin point. The older the ripple, the farther the Euclidian distance. Since we are expressing Euclidian distance with a series of squares, we need a fuzz variable to allow us to fudge the numbers and effectively display a circle. In this instance, we use a range of plus or minus 0.6. We then track the rippling tiles in the same way as the living tiles from the Game of Life, resetting the object literal at the start of every ripple-drawing stage so as to only draw the outer edge. The rocks use a Map object to assign rock tiles a height. Whenever we check if a tile is a rock, first we check if that tile is documented in the rock map. If it is, return true if the rocks height is greater than 0, which means that it exists, or false if it is equal to or less than 0, which means that it doesn't. If the tile is not recorded in the map, check if that rock tile is a rock tile against the hash and, in the case that it is, create a rock there and spread the rock from that tile. When the spread function is called, it creates a queue of tiles to check. When a neighbor is determined to be a rock, that neighbor is added to the queue. The loop runs, checking neighbors of all queued tiles and turning them into rocks if the qualifications are met. Lastly, when a ripple lands on a rock tile, the rock's height is quickly lowered to zero to clear it away.<br>The third world is much simpler. Perlin noise dictates cloud density by loudness, adding each cloud tile to another Map object, with each tile having an opacity value. When a tile is selected, or hovered over, it sets the opacity of that tile to 0, and the opacity of all neighboring cloud tiles that have some level of opacity to 160. Lastly, the smooth scrolling would be impossible to create by shifting the cloud tile locations, since that would look very choppy. Instead, I removed the ability for the user to see exactly where on the map they are and set the stroke of the sky tiles to be the same color as the sky itself. Then, I have the camera move very slowly on every draw step. This makes it look like the clouds are moving separately from the player and the sky, when in actuality the sky and clouds are bound together and stationary while the player is the one that is moving.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>This experiment was a really fun exercise in coming up with creative uses for seeded randomness. The limitation of using tiles to show more complicated visuals like clouds, circles, smooth movement, or terrain with varying height was also an interesting problem to have to work around, and I think it made for a really intriguing final product. Not everything ended up exactly as I intended, though. For example, the water world was initially going to bounce ripples off of the rocks, but that would require so much more information to be stored in reach ripple, like directionality, and I could not get it to work in a timely manner. Still, I am really happy with what I ended up with, and I think the fact that the rocks actually fall into the water is really cool looking. I've always thought Conway's Game of Life was super interesting, and it was a fun logic exercise to implement it in this way. Additionally, I am really proud of my idea to move the camera instead of the world in the cloud one. It's amazing what you can come up with while going to the bathroom.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
