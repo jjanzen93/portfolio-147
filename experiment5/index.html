@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 5 - Evolutionary Impressions</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 5 - Evolutionary Impressions</h1>
+
+			<div class="minor-section">
+				<body>
+    				<select id="dropper"></select>
+ 				   <button id="restart">
+				      restart
+				    </button>
+ 					<button onclick="startAnnealing()">anneal</button>
+					<input id="annealDurationInput" type="number" value="30" min="1" max="300" style="width: 50px;"> seconds
+ 				   <p>
+  				    Mutation rate (<span id="rate"></span>%):<br /><input
+  				    	id="slider"
+  				    	type="range"
+    					min="1"
+    				    max="100"
+    				    value="100"
+ 				    	/>
+ 					</p>
+ 					<div id="reference"></div>
+  					<p id="active"></p>
+  					<p>Active score: <span id="activeScore"></span></p>
+  					<p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+  					<p id="best"></p>
+ 					<p>Best score: <span id="bestScore"></span></p>
+  					<p id="memory" data-max-items="16"></p>
+ 				</body>
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>This project seeks to emulate black and white images by placing triangles of random size, rotation, shade, location, and transparency. The program compares its own design to the pixel content of the reference image, mutating off of the design with the highest score. The annealing process can be automated by entering the amount of seconds, then slowly decreasing the mutation rate over that time after pressing the button.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p>Triangles are stored as objects with attributes like rotation, size, shade, etc. These attributes are mutated off of the best design so far as determined by the mutation function, which takes in the current mutation rate percentage and gives an amount to mutate the values of the original design by. Annealing the image is done by taking in a time value in seconds, then mapping the rate from 100-0% over that given time. This manages big changes toward the beginning of the process, then slowly starts making more minor adjustments as a clearer image starts to take shape.</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>It was fascinating to see the image slowly start to take shape as I adjusted parameters and waited for the program to figure it out. Having to assess a problem and define constraints to solve it was a good exercise in problem solving, like adjusting triangle size for more detail or increasing their number to cover the whole canvas. In the future, I would like to have a more specific idea of what I want to create to avoid getting bogged down in tiny adjustments that take a long time to observe the effects of.</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
